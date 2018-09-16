@@ -23,7 +23,6 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
     public static final float DEFAULT_VOLUME = 1.0f;
     public static final int DEFAULT_PRIORITY = 1;
     public static final float DEFAULT_RATE = 1.0f;
-    public static final int WHOLE_NOTE = 500; // in milliseconds
 
     private Button buttonA;
     private Button buttonBb;
@@ -40,6 +39,7 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
     private Button buttonPlayScale;
     private Button buttonPlayScaleE;
     private Button buttonChallenge2;
+    private Button buttonTwinkle;
     private NumberPicker numberPickerTimes;
     private NumberPicker numberPickerNote;
     private Map<Integer, Integer> noteMap;
@@ -111,7 +111,7 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
         noteMap.put(R.id.button_synth_f, noteF);
         noteMap.put(R.id.button_synth_fsharp, noteFsharp);
         noteMap.put(R.id.button_synth_g, noteG);
-        noteMap.put(R.id.button_synth_gsharp, noteG);
+        noteMap.put(R.id.button_synth_gsharp, noteGsharp);
         noteMap.put(R.id.button_synth_highA, noteHighA);
         noteMap.put(R.id.button_synth_highB, noteHighB);
         noteMap.put(R.id.button_synth_highBb, noteHighBb);
@@ -188,6 +188,7 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
         buttonHighGsharp.setOnClickListener(noteListener);
 
         buttonChallenge2.setOnClickListener(this);
+        buttonTwinkle.setOnClickListener(this);
     }
 
     private void wireWidgets() {
@@ -206,6 +207,7 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
         buttonPlayScale = findViewById(R.id.button_synth_scale);
         buttonPlayScaleE = findViewById(R.id.button_synth_scaleE);
         buttonChallenge2 = findViewById(R.id.button_synth_challenge2);
+        buttonTwinkle = findViewById(R.id.button_synth_twinkle);
         numberPickerNote = findViewById(R.id.numberPicker_synth_note);
         numberPickerTimes = findViewById(R.id.numberPicker_synth_times);
 
@@ -239,16 +241,66 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
             case R.id.button_synth_challenge2:
                 promptResponse();
                 break;
+            case R.id.button_synth_twinkle:
+                playTwinkle();
+                break;
         }
     }
+
+    private void playTwinkle() {
+        Song scale = new Song();
+
+        scale.add(new Note(noteA, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteA, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighE, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighE, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighFsharp, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighFsharp, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighE, Note.WHOLE_NOTE));
+        scale.add(new Note(noteD, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteD, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteCsharp, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteCsharp, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteB, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteB, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteA, Note.WHOLE_NOTE));
+
+        for (int i = 0; i < 2; i++) {
+            scale.add(new Note(noteHighE, Note.WHOLE_NOTE / 2));
+            scale.add(new Note(noteHighE, Note.WHOLE_NOTE / 2));
+            scale.add(new Note(noteD, Note.WHOLE_NOTE / 2));
+            scale.add(new Note(noteD, Note.WHOLE_NOTE / 2));
+            scale.add(new Note(noteCsharp, Note.WHOLE_NOTE / 2));
+            scale.add(new Note(noteCsharp, Note.WHOLE_NOTE / 2));
+            scale.add(new Note(noteB, Note.WHOLE_NOTE));
+        }
+
+        scale.add(new Note(noteA, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteA, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighE, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighE, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighFsharp, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighFsharp, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighE, Note.WHOLE_NOTE));
+        scale.add(new Note(noteD, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteD, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteCsharp, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteCsharp, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteB, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteB, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteA, Note.WHOLE_NOTE));
+
+        playSong(scale);
+    }
+
 
     private void promptResponse() {
         int[] noteIDs = new int[]{
                 noteA, noteB, noteBb, noteC, noteCsharp, noteD, noteDsharp, noteE, noteF, noteFsharp, noteG, noteGsharp,
                 noteHighA, noteHighB, noteHighBb, noteHighC, noteHighCsharp, noteHighD, noteHighDsharp, noteHighE, noteHighF, noteHighFsharp, noteHighG, noteHighGsharp
         };
-        for(int i = 0; i < numberPickerTimes.getValue(); i++){
-            playNote(noteIDs[numberPickerNote.getValue()]);
+        for (int i = 0; i < numberPickerTimes.getValue(); i++) {
+            playNote(new Note(noteIDs[numberPickerNote.getValue()]));
             delay(1000);
         }
     }
@@ -284,60 +336,41 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void playSong(Song scale) {
-        for(Note note : scale.getNotes()){
+        for (Note note : scale.getNotes()) {
             playNote(note);
             delay(note.getDelay());
         }
     }
 
     private void playScale() {
-        playNote(noteA);
-        delay(WHOLE_NOTE);
-        playNote(noteBb);
-        delay(WHOLE_NOTE);
-        playNote(noteB);
-        delay(WHOLE_NOTE);
-        playNote(noteC);
-        delay(WHOLE_NOTE);
-        playNote(noteCsharp);
-        delay(WHOLE_NOTE);
-        playNote(noteD);
-        delay(WHOLE_NOTE);
-        playNote(noteDsharp);
-        delay(WHOLE_NOTE);
-        playNote(noteE);
-        delay(WHOLE_NOTE);
-        playNote(noteF);
-        delay(WHOLE_NOTE);
-        playNote(noteFsharp);
-        delay(WHOLE_NOTE);
-        playNote(noteG);
-        delay(WHOLE_NOTE);
-        playNote(noteGsharp);
-        delay(WHOLE_NOTE);
-        playNote(noteHighA);
-        delay(WHOLE_NOTE);
-        playNote(noteHighBb);
-        delay(WHOLE_NOTE);
-        playNote(noteHighB);
-        delay(WHOLE_NOTE);
-        playNote(noteHighC);
-        delay(WHOLE_NOTE);
-        playNote(noteHighCsharp);
-        delay(WHOLE_NOTE);
-        playNote(noteHighD);
-        delay(WHOLE_NOTE);
-        playNote(noteHighDsharp);
-        delay(WHOLE_NOTE);
-        playNote(noteHighE);
-        delay(WHOLE_NOTE);
-        playNote(noteHighF);
-        delay(WHOLE_NOTE);
-        playNote(noteHighFsharp);
-        delay(WHOLE_NOTE);
-        playNote(noteHighG);
-        delay(WHOLE_NOTE);
-        playNote(noteHighGsharp);
+        Song scale = new Song();
+        scale.add(new Note(noteA, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteBb, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteB, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteC, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteCsharp, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteD, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteDsharp, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteE, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteF, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteFsharp, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteG, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteGsharp, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighA, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighBb, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighB, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighC, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighCsharp, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighD, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighDsharp, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighE, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighF, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighFsharp, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighG, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighGsharp, Note.WHOLE_NOTE / 2));
+
+        playSong(scale);
+
     }
 
     private void delay(int duration) {
@@ -356,7 +389,7 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
         soundPool.play(note, DEFAULT_VOLUME, DEFAULT_VOLUME, DEFAULT_PRIORITY, loop, DEFAULT_RATE);
     }
 
-    private void playNote(Note note){
+    private void playNote(Note note) {
         playNote(note.getNoteID(), 0);
     }
 
@@ -377,3 +410,4 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
 
 
 }
+

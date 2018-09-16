@@ -114,8 +114,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="G♯"
-        app:layout_constraintStart_toEndOf="@+id/button_synth_d"
+        app:layout_constraintLeft_toRightOf="@+id/button_synth_d"
         app:layout_constraintTop_toBottomOf="@+id/button_synth_g" />
+
 
     <Button
         android:id="@+id/button_synth_highA"
@@ -134,8 +135,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="B'"
-        app:layout_constraintStart_toEndOf="@+id/button_synth_e"
-        app:layout_constraintTop_toBottomOf="@+id/button_synth_highA" />
+        app:layout_constraintStart_toEndOf="@+id/button_synth_f"
+        app:layout_constraintTop_toBottomOf="@+id/button_synth_highBb" />
 
     <Button
         android:id="@+id/button_synth_highBb"
@@ -144,8 +145,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="B♭'"
-        app:layout_constraintStart_toEndOf="@+id/button_synth_f"
-        app:layout_constraintTop_toBottomOf="@+id/button_synth_highB" />
+        app:layout_constraintStart_toEndOf="@+id/button_synth_e"
+        app:layout_constraintTop_toBottomOf="@+id/button_synth_highA" />
 
     <Button
         android:id="@+id/button_synth_highC"
@@ -155,7 +156,7 @@
         android:layout_marginTop="8dp"
         android:text="C'"
         app:layout_constraintStart_toEndOf="@+id/button_synth_fsharp"
-        app:layout_constraintTop_toBottomOf="@+id/button_synth_highBb" />
+        app:layout_constraintTop_toBottomOf="@+id/button_synth_highB" />
 
     <Button
         android:id="@+id/button_synth_fsharp"
@@ -204,7 +205,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="E'"
-        app:layout_constraintStart_toEndOf="@+id/button_synth_highB"
+        app:layout_constraintStart_toEndOf="@+id/button_synth_highBb"
         app:layout_constraintTop_toBottomOf="@+id/button_synth_highDsharp" />
 
     <Button
@@ -214,7 +215,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="F'"
-        app:layout_constraintStart_toEndOf="@+id/button_synth_highBb"
+        app:layout_constraintStart_toEndOf="@+id/button_synth_highB"
         app:layout_constraintTop_toBottomOf="@+id/button_synth_highE" />
 
     <Button
@@ -294,5 +295,15 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toTopOf="@+id/button_synth_challenge2"
         app:layout_constraintEnd_toEndOf="parent"></NumberPicker>
+
+    <Button
+        android:id="@+id/button_synth_twinkle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Play Twinkle"
+        app:layout_constraintBottom_toTopOf="@+id/button_synth_scale"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
