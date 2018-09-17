@@ -40,6 +40,7 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
     private Button buttonPlayScaleE;
     private Button buttonChallenge2;
     private Button buttonTwinkle;
+    private Button buttonMii;
     private NumberPicker numberPickerTimes;
     private NumberPicker numberPickerNote;
     private Map<Integer, Integer> noteMap;
@@ -189,6 +190,7 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
 
         buttonChallenge2.setOnClickListener(this);
         buttonTwinkle.setOnClickListener(this);
+        buttonMii.setOnClickListener(this);
     }
 
     private void wireWidgets() {
@@ -208,6 +210,7 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
         buttonPlayScaleE = findViewById(R.id.button_synth_scaleE);
         buttonChallenge2 = findViewById(R.id.button_synth_challenge2);
         buttonTwinkle = findViewById(R.id.button_synth_twinkle);
+        buttonMii = findViewById(R.id.button_synth_mii);
         numberPickerNote = findViewById(R.id.numberPicker_synth_note);
         numberPickerTimes = findViewById(R.id.numberPicker_synth_times);
 
@@ -244,7 +247,42 @@ public class SynthesizerActivity extends AppCompatActivity implements View.OnCli
             case R.id.button_synth_twinkle:
                 playTwinkle();
                 break;
+            case R.id.button_synth_mii:
+                playMii();
         }
+    }
+
+    private void playMii() {
+        Song scale = new Song();
+
+        scale.add(new Note(noteFsharp, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighA, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighCsharp, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighA, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteFsharp, Note.WHOLE_NOTE / 4));
+        scale.add(new Note(noteD, Note.WHOLE_NOTE / 4));
+        scale.add(new Note(noteD, Note.WHOLE_NOTE / 4));
+        scale.add(new Note(noteD, Note.WHOLE_NOTE));
+        scale.add(new Note(noteCsharp, Note.WHOLE_NOTE / 4));
+        scale.add(new Note(noteD, Note.WHOLE_NOTE / 4));
+        scale.add(new Note(noteFsharp, Note.WHOLE_NOTE / 4));
+        scale.add(new Note(noteHighA, Note.WHOLE_NOTE / 4));
+        scale.add(new Note(noteHighCsharp,  Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteHighA, Note.WHOLE_NOTE / 2));
+        scale.add(new Note(noteFsharp, Note.WHOLE_NOTE / 4));
+        scale.add(new Note(noteHighE, Note.WHOLE_NOTE + Note.WHOLE_NOTE / 4));
+        scale.add(new Note(noteHighDsharp, Note.WHOLE_NOTE / 4));
+        scale.add(new Note(noteHighD, Note.WHOLE_NOTE / 4));
+
+
+
+
+
+
+
+        playSong(scale);
+
+
     }
 
     private void playTwinkle() {

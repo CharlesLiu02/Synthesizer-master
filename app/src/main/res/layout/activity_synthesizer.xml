@@ -306,4 +306,14 @@
         app:layout_constraintBottom_toTopOf="@+id/button_synth_scale"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/button_synth_mii"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Play Music"
+        app:layout_constraintBottom_toTopOf="@+id/button_synth_scaleE"
+        app:layout_constraintStart_toEndOf="@+id/button_synth_twinkle" />
+
 </android.support.constraint.ConstraintLayout>
